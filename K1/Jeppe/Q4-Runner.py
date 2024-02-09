@@ -16,7 +16,6 @@ def LessContrast(Image):
             newImage[x][y][2]=pixelb
     return newImage
 
-
 if __name__ == "__main__":
     Input=cv.imread("K1/ConstrastTHIS.png")
     cv.imshow("Original input", Input)
