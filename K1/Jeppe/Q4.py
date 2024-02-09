@@ -63,31 +63,44 @@ def findColorBounderies(Image,nr):
     return int(low),int(high)
 
 def StrechColorPixel(Pixel,number,lower,upper):
-    b=-lower
-    a=255/(upper+b)
+    Lower=lower[number]
+    Upper=upper[number]
+    b=-Lower
+    a=255/(Upper+b)
     #print("OST")
 
     Value=Pixel[number]
     newValue=round(a*(Value+b))
+
+    if (newValue>255):
+        newValue=255
+        print("OVER 255")
+
+    if (newValue<0):
+        newValue=0
+        print("UNDER 0")
     return newValue
 
-def StrechColorImage(Image):
-    StrechedImage=Image
-
+def FindEdges(Image):
     lowerR,upperR=findColorBounderies(Image,0)
     lowerG,upperG=findColorBounderies(Image,1)
     lowerB,upperB=findColorBounderies(Image,2)
-    
-    print(f'LowerR: {lowerR}, UpperR: {upperR}\n'
-          f'LowerG: {lowerG}, UpperG: {upperG}\n'
-          f'LowerB: {lowerB}, UpperR: {upperB}\n')
-    
+    lower = [lowerR,lowerG,lowerB]
+    upper = [upperR,upperG,upperB]
+    print(f'lower:{lower}\n'
+          f'upper:{upper}')
+    return lower,upper
+
+def StrechColorImage(Image):
+    StrechedImage=Image
+    lower,upper=FindEdges(Image)
     for x in range(Image.shape[0]):
         for y in range(Image.shape[1]):
-            StrechedImage[x][y][0] = StrechColorPixel(Image[x][y],0,lowerR,upperR)
-            StrechedImage[x][y][1] = StrechColorPixel(Image[x][y],1,lowerG,upperG)
-            StrechedImage[x][y][2] = StrechColorPixel(Image[x][y],2,lowerB,upperB)
-
+            for i in range(Image.shape[2]):
+                StrechedImage[x][y][i] = StrechColorPixel(Image[x][y],i,lower,upper)
+#            StrechedImage[x][y][1] = StrechColorPixel(Image[x][y],1,lowerG,upperG)
+ #           StrechedImage[x][y][2] = StrechColorPixel(Image[x][y],2,lowerB,upperB)
+    FindEdges(StrechedImage)
     return StrechedImage
 
 if __name__ == "__main__":
