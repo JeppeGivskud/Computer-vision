@@ -6,7 +6,7 @@ sys.path.insert(0, '/Users/jeppegivskud/Documents/Programmering/VSCODE/Computer-
 from Grassfire import*
 
 sys.path.insert(0, '/Users/jeppegivskud/Documents/Programmering/VSCODE/Computer-vision/K1/Jeppe')
-from Q4 import*
+from Jeppe import*
 
 def drawNewPicture(picture,Objects):
     for object in Objects:
