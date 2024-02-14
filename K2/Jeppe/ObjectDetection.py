@@ -1,14 +1,16 @@
-#from COMPUTER-VISION.K2.Jeppe.Grassfire.Grassfire import Extendimage
 import random
 from Threshold import*
+
 import sys
 sys.path.insert(0, '/Users/jeppegivskud/Documents/Programmering/VSCODE/Computer-vision/K2/Jeppe/Grassfire')
 from Grassfire import*
-#from K2.Jeppe.Grassfire.Grassfire import*
+
+sys.path.insert(0, '/Users/jeppegivskud/Documents/Programmering/VSCODE/Computer-vision/K1/Jeppe')
+from Q4 import*
 
 def drawNewPicture(picture,Objects):
     for object in Objects:
-        color=random(0,255)
+        color=random.randint(0, 255)
         print(color)
         for pixel in object:
             picture[pixel[0]][pixel[1]]=color
@@ -17,8 +19,10 @@ def drawNewPicture(picture,Objects):
 
 if __name__ == "__main__":
     print("Running")
-    image = cv2.imread("K2/Jeppe/Grassfire/Lady.png", flags=cv2.IMREAD_GRAYSCALE)
-    image=Threshold(image,150)
+    image = cv2.imread("K2/Jeppe/Grassfire/Turkeys.png", flags=cv2.IMREAD_GRAYSCALE)
+    image=StrechActualGreyImage(image)
+    image=Threshold(image,110)
+    image=Flip(image)
     image=Extendimage(image)
     Objects=Grassfire(image)
     image=drawNewPicture(image,Objects)

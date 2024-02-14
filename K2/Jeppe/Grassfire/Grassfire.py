@@ -55,6 +55,7 @@ def Grassfire(image):
                 deck=[]
                 if image[y,x]==255:
                     count=0
+                    Count=0
                     deck.append([y,x])
 
                     objectPixels=[]
@@ -66,17 +67,19 @@ def Grassfire(image):
 
                         objectPixels.append(position_to_burn)
                         #print(f'Pixel {position_to_burn} has been appened to objectpixels: {objectPixels}')
-
+                        oops = deck.pop(len(deck)-1)
                         #print(f'The deck {deck} is popped {deck.pop(len(deck)-1)} and is now {deck}')
-
-                        #deck.pop(len(deck)-1)
 
                         deck=CheckSurroundings(image,position_to_burn,deck)
                         #print(f'The neighboring cells are checked and these were found {deck}')
                         #print()
+                        count+=1
+                        print("count is: ",count)
+
 
                     #print("deck is empty ",deck)
-                    #print("count is: ",count)
+                    Count+=1
+                    print("big count is: ",Count)
                     #exit()
                     Objects.append(objectPixels)
                     #exit()

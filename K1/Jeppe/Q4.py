@@ -30,6 +30,7 @@ def findBounderies(Image):
             if (value>=high):
                 high=Image[x][y][0]
     return int(low),int(high)
+
 def StrechPixel(value,lower,upper):
     b=-lower
     a=255/(upper+b)
@@ -48,6 +49,34 @@ def StrechGreyImage(Image):
         for y in range(GrayImage.shape[1]):
             StrechedImage[x][y] = StrechPixel(GrayImage[x][y],lower,upper)
     return StrechedImage
+
+def findActualGreyBounderies(Image):
+    low=255
+    high=0
+    for y in range(Image.shape[0]):
+        for x in range(Image.shape[1]):
+            value=Image[y][x]
+            if (value<=low):
+                low=Image[y][x]
+            if (value>=high):
+                high=Image[y][x]
+    return int(low),int(high)
+
+def StrechActualPixel(Pixel,lower,upper):
+    b=-lower
+    a=255/(upper+b)
+
+    Value=Pixel
+    newValue=round(a*(Value+b))
+    return newValue
+
+def StrechActualGreyImage(Image):
+    lower,upper=findActualGreyBounderies(Image)
+
+    for y in range(Image.shape[0]):
+        for x in range(Image.shape[1]):
+            Image[y][x] = StrechActualPixel(Image[y][x],lower,upper)
+    return Image
 
 #Color images
 def findColorBounderies(Image,nr):
