@@ -1,31 +1,30 @@
 import cv2
 import numpy as np
-from collections import deque
 
 def CheckSurroundings(image,position_to_burn,deck):
     y=position_to_burn[0]
     x=position_to_burn[1]
-    print("check neighbors of: ",y,",",x)
+    #print("check neighbors of: ",y,",",x)
 
     four=y-1,x
     three=y,x-1
     two=y+1,x
     one=y,x+1
 
-    print(f'Four: {four}, Three: {three}, Two: {two}, One: {one}')
+    #print(f'Four: {four}, Three: {three}, Two: {two}, One: {one}')
 
     if (image[four]==255): 
         deck.append(four) 
-        print(f'4 is {image[four]} and has been added')
+        #print(f'4 is {image[four]} and has been added')
     if (image[three]==255): 
         deck.append(three) 
-        print(f'3 is {image[three]} and has been added')
+        #print(f'3 is {image[three]} and has been added')
     if (image[two]==255): 
         deck.append(two) 
-        print(f'2 is {image[two]} and has been added')
+        #print(f'2 is {image[two]} and has been added')
     if (image[one]==255): 
         deck.append(one) 
-        print(f'1 is {image[one]} and has been added')
+        #print(f'1 is {image[one]} and has been added')
 
     return deck
 
@@ -47,7 +46,7 @@ def Grassfire(image):
             #if deck is not empty take top stack and run burn procedure
     
     Objects=[]
-    print(f'{image.shape[1],image.shape[0]}')
+    #print(f'{image.shape[1],image.shape[0]}')
 
     for y in range(image.shape[0]):
         for x in range (image.shape[1]):                
@@ -63,21 +62,21 @@ def Grassfire(image):
                         #burn
                         position_to_burn = deck[len(deck)-1]
                         image[position_to_burn[0]][position_to_burn[1]]=0;
-                        print(f'Position {position_to_burn} is burnt and the image has value {image[position_to_burn[0],position_to_burn[1]]}')
+                        #print(f'Position {position_to_burn} is burnt and the image has value {image[position_to_burn[0],position_to_burn[1]]}')
 
                         objectPixels.append(position_to_burn)
-                        print(f'Pixel {position_to_burn} has been appened to objectpixels: {objectPixels}')
+                        #print(f'Pixel {position_to_burn} has been appened to objectpixels: {objectPixels}')
 
-                        print(f'The deck {deck} is popped {deck.pop(len(deck)-1)} and is now {deck}')
+                        #print(f'The deck {deck} is popped {deck.pop(len(deck)-1)} and is now {deck}')
 
                         #deck.pop(len(deck)-1)
 
                         deck=CheckSurroundings(image,position_to_burn,deck)
-                        print(f'The neighboring cells are checked and these were found {deck}')
-                        print()
+                        #print(f'The neighboring cells are checked and these were found {deck}')
+                        #print()
 
-                    print("deck is empty ",deck)
-                    print("count is: ",count)
+                    #print("deck is empty ",deck)
+                    #print("count is: ",count)
                     #exit()
                     Objects.append(objectPixels)
                     #exit()
