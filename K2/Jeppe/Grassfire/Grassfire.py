@@ -102,6 +102,14 @@ def Extendimage(inputImage):
                 output_image[y,x]=Image[y-1,x-1]
     return output_image
 
+def drawNewPicture(picture,Objects):
+    for object in Objects:
+        color=random.randint(0, 255)
+        #print(color)
+        for pixel in object:
+            picture[pixel[0]][pixel[1]]=color
+    return picture
+
 if __name__ == "__main__":
     print("Running")
     image = cv2.imread("K2/Jeppe/Grassfire/Lady.png", flags=cv2.IMREAD_GRAYSCALE)

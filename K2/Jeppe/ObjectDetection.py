@@ -1,18 +1,8 @@
 import random
 
-import numpy as np;
 from Threshold import*
 from Grassfire import Grassfire
 from Modules import Q4
-
-
-def drawNewPicture(picture,Objects):
-    for object in Objects:
-        color=random.randint(0, 255)
-        #print(color)
-        for pixel in object:
-            picture[pixel[0]][pixel[1]]=color
-    return picture
 
 
 if __name__ == "__main__":
