@@ -19,23 +19,27 @@ def FindThreshold(image):
     return int(Threshold)
 
 
-def Threshold(image,threshold):
-    for y in range(image.shape[0]):
-        for x in range(image.shape[1]): 
-            if image[y][x]<threshold:
-                image[y][x]=0
-            else:
-                image[y][x]=255
-    return image
+def Threshold(inputImage,threshold):
+    Image=inputImage.copy()
 
-def Flip(image):
-    for y in range(image.shape[0]):
-        for x in range(image.shape[1]): 
-            if (image[y][x]==0): 
-                image[y][x]=255
-            else : 
-                image[y][x]=0
-    return image
+    for y in range(Image.shape[0]):
+        for x in range(Image.shape[1]): 
+            if Image[y][x]<threshold:
+                Image[y][x]=0
+            else:
+                Image[y][x]=255
+    return Image
+
+def Flip(inputImage):
+    Image=inputImage.copy()
+    for y in range(Image.shape[0]):
+        for x in range(Image.shape[1]):
+            if Image[y][x] < 200:
+                Image[y][x] = 255
+            else:
+                Image[y][x] = 0
+    return Image
+
 
 if __name__=="__main__":
     print("Running")

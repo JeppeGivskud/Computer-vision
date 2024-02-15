@@ -29,7 +29,9 @@ def CheckSurroundings(image,position_to_burn,deck):
     return deck
 
 
-def Grassfire(image):
+def Grassfire(inputImage):
+    Image=inputImage.copy()
+
     #Load image
     #array of objects
     #go through image x,y
@@ -39,21 +41,20 @@ def Grassfire(image):
                 #newdeck,objectCoordinates=Burn(toppixel)
                 #deck.append
                 #objectarray.append=objectcoordinates
-            #append pixel to array in position 0
+                #append pixel to array in position 0
                 #pixel = 0
                 # check if surrounding pixels are object.
                 # append each surrounding pixel to deck
-            #if deck is not empty take top stack and run burn procedure
     
     Objects=[]
     #print(f'{image.shape[1],image.shape[0]}')
 
-    for y in range(image.shape[0]):
-        for x in range (image.shape[1]):                
+    for y in range(Image.shape[0]):
+        for x in range (Image.shape[1]):                
                 #print(f'{y,x} is {image[y,x]}')
 
                 deck=[]
-                if image[y,x]==255:
+                if Image[y,x]==255:
                     count=0
                     Count=0
                     deck.append([y,x])
@@ -62,7 +63,7 @@ def Grassfire(image):
                     while (len(deck)>0):
                         #burn
                         position_to_burn = deck[len(deck)-1]
-                        image[position_to_burn[0]][position_to_burn[1]]=0;
+                        Image[position_to_burn[0]][position_to_burn[1]]=0;
                         #print(f'Position {position_to_burn} is burnt and the image has value {image[position_to_burn[0],position_to_burn[1]]}')
 
                         objectPixels.append(position_to_burn)
@@ -70,7 +71,7 @@ def Grassfire(image):
                         oops = deck.pop(len(deck)-1)
                         #print(f'The deck {deck} is popped {deck.pop(len(deck)-1)} and is now {deck}')
 
-                        deck=CheckSurroundings(image,position_to_burn,deck)
+                        deck=CheckSurroundings(Image,position_to_burn,deck)
                         #print(f'The neighboring cells are checked and these were found {deck}')
                         #print()
                         count+=1
@@ -91,13 +92,14 @@ def Grassfire(image):
                 #print(deck)
     return Objects
 
-def Extendimage(image):
-    output_image = np.zeros((image.shape[0]+2, image.shape[1]+2), dtype=image.dtype)
+def Extendimage(inputImage):
+    Image=inputImage.copy()
+    output_image = np.zeros((Image.shape[0]+2, Image.shape[1]+2), dtype=Image.dtype)
     #print(output_image)
     for y in range(output_image.shape[0]-1):
         for x in range (output_image.shape[1]-1):
-            if y>0 and y<output_image.shape[0] and x>0 and x<output_image.shape[1]:
-                output_image[y,x]=image[y-1,x-1]
+            if y>0 and y<output_image.shape[0] and x>0 and x<Image.shape[1]:
+                output_image[y,x]=Image[y-1,x-1]
     return output_image
 
 if __name__ == "__main__":

@@ -70,7 +70,8 @@ def StrechActualPixel(Pixel,lower,upper):
     newValue=round(a*(Value+b))
     return newValue
 
-def StrechActualGreyImage(Image):
+def StrechActualGreyImage(inputImage):
+    Image=inputImage.copy()
     lower,upper=findActualGreyBounderies(Image)
 
     for y in range(Image.shape[0]):
