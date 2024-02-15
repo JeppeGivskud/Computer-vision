@@ -1,5 +1,6 @@
 import cv2
 import numpy as np
+import random
 
 def CheckSurroundings(image,position_to_burn,deck):
     y=position_to_burn[0]

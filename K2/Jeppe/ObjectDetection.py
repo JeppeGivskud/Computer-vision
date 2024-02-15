@@ -1,5 +1,3 @@
-import random
-
 from Threshold import*
 from Grassfire import Grassfire
 from Modules import Q4
@@ -19,7 +17,7 @@ if __name__ == "__main__":
 
     Extended=Grassfire.Extendimage(BinaryFlipped)
     Objects=Grassfire.Grassfire(Extended)
-    Grassfired=drawNewPicture(Extended,Objects)
+    Grassfired=Grassfire.drawNewPicture(Extended,Objects)
 
 
     cv2.imshow("inputImage", inputImage)
