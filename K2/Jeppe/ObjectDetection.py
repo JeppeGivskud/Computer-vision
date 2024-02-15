@@ -1,12 +1,8 @@
-import random
+import random;
 from Threshold import*
+from Grassfire import Grassfire
+from Modules import Q4
 
-import sys
-sys.path.insert(0, '/Users/jeppegivskud/Documents/Programmering/VSCODE/Computer-vision/K2/Jeppe/Grassfire')
-from Grassfire import*
-
-sys.path.insert(0, '/Users/jeppegivskud/Documents/Programmering/VSCODE/Computer-vision/K1/Jeppe')
-from Jeppe import*
 
 def drawNewPicture(picture,Objects):
     for object in Objects:
@@ -19,12 +15,15 @@ def drawNewPicture(picture,Objects):
 
 if __name__ == "__main__":
     print("Running")
-    image = cv2.imread("K2/Jeppe/Grassfire/Turkeys.png", flags=cv2.IMREAD_GRAYSCALE)
-    image=StrechActualGreyImage(image)
-    image=Threshold(image,110)
+    image = cv2.imread("K2/Jeppe/Grassfire/KAT<3.png", flags=cv2.IMREAD_GRAYSCALE)
+    image=Q4.StrechActualGreyImage(image)
+
+    threshold=FindThreshold(image)
+    image=Threshold(image,threshold+10)
     image=Flip(image)
-    image=Extendimage(image)
-    Objects=Grassfire(image)
+
+    image=Grassfire.Extendimage(image)
+    Objects=Grassfire.Grassfire(image)
     image=drawNewPicture(image,Objects)
 
     cv2.imshow("Display window", image)

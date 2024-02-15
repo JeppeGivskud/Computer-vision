@@ -74,12 +74,12 @@ def Grassfire(image):
                         #print(f'The neighboring cells are checked and these were found {deck}')
                         #print()
                         count+=1
-                        print("count is: ",count)
+                        #print("count is: ",count)
 
 
                     #print("deck is empty ",deck)
                     Count+=1
-                    print("big count is: ",Count)
+                    #print("big count is: ",Count)
                     #exit()
                     Objects.append(objectPixels)
                     #exit()
