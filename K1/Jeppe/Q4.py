@@ -50,6 +50,16 @@ def StrechGreyImage(Image):
             StrechedImage[x][y] = StrechPixel(GrayImage[x][y],lower,upper)
     return StrechedImage
 
+def ActualLessContrast(inputImage,koefficient):
+    Image=inputImage.copy()
+    a=koefficient
+
+    for y in range(Image.shape[0]):
+        for x in range(Image.shape[1]):
+            Image[y][x]=a*Image[y][x]
+
+    return Image
+
 def findActualGreyBounderies(Image):
     low=255
     high=0
