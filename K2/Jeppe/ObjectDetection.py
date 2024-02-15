@@ -17,7 +17,7 @@ def drawNewPicture(picture,Objects):
 
 if __name__ == "__main__":
     print("Running")
-    inputImage = cv2.imread("K2/Jeppe/Grassfire/Kat2.png", flags=cv2.IMREAD_GRAYSCALE)
+    inputImage = cv2.imread("K2/Jeppe/Grassfire/Target.png", flags=cv2.IMREAD_GRAYSCALE)
     Stretched=Q4.StrechActualGreyImage(inputImage)
     
     threshold=FindThreshold(Stretched)
