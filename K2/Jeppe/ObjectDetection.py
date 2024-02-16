@@ -5,14 +5,14 @@ from Modules import Q4
 
 if __name__ == "__main__":
     print("Running")
-    inputImage = cv2.imread("K2/Jeppe/Grassfire/Turkeys.png", flags=cv2.IMREAD_GRAYSCALE)
+    inputImage = cv2.imread("K2/Jeppe/Grassfire/Target.png", flags=cv2.IMREAD_GRAYSCALE)
     
     #Pre-processing
-    lesscontrast=Q4.ActualLessContrast(inputImage,0.5)
+    #lesscontrast=Q4.ActualLessContrast(inputImage,0.5)
     Stretched=Q4.StrechActualGreyImage(inputImage)
     
     threshold=FindThreshold(Stretched)
-    Binary=Threshold(Stretched,threshold)
+    Binary=Threshold(Stretched,108)
     BinaryFlipped = Flip(Binary)
 
     Extended=Grassfire.Extendimage(BinaryFlipped)
