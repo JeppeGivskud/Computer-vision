@@ -1,3 +1,4 @@
+from asyncio.windows_events import NULL
 import cv2 as cv
 import numpy as np
 
@@ -18,22 +19,24 @@ part2_corner = cv.dilate(part2_corner, None)
 
 # Determine the threshold so that not every detected gets marked
 # Set the color of each pixel where gradient value is greater than threshold to green
-thresh1 = 0.03 * part1_corner.max()
+thresh1 = 0.5 * part1_corner.max()
 part1[part1_corner > thresh1] = [0, 255, 0]
 # np.where finds the coordinates where the green marks are for the corners
 feature_location1 = np.where(part1_corner > thresh1)
 
-"""
+test = []
 for y in feature_location1[0]:
-    if y > 2 and y < part1.shape[0] - 3:
+    if y > 0 and y < part1_gray.shape[0]:
         for x in feature_location1[1]:
-            
+            if x > 0 and x < part1_gray.shape[1]:
+                bruh = part1_gray[y - 1 : y + 2, x - 1 : x + 2]
+
+print(test)
+
 """
-
-
 thresh2 = 0.03 * part2_corner.max()
 part2[part2_corner > thresh2] = [0, 255, 0]
-
+"""
 cv.imshow("part1", part1)
 cv.imshow("part2", part2)
 cv.waitKey(0)
