@@ -1,16 +1,30 @@
 import glob
-import cv2 as cv
+import cv2
 import numpy as np
 
+background_images = [
+    cv2.imread(f, cv2.IMREAD_GRAYSCALE)
+    for f in glob.glob("Assets/Warmup/BackgroundImages/*.tif")
+]
 
-path = glob.glob(
-    "/Users/jakob/Documents/8. Semester/🤖 Computer Vision/OpenCV install/Lektion 4 Motion Analysis/UCSD_Anomaly_Dataset.v1p2/UCSDped1/Test/Test016/*.tif"
-)
-test16 = []
-for img in path:
-    n = cv.imread(img)
-    test16.append(n)
+test_image = cv2.imread("Assets/Warmup/test_image.png", cv2.IMREAD_GRAYSCALE)
+output_image = test_image.copy()
 
-for image in range(len(test16)):
-    cv.imshow("yeet", test16[image])
-    cv.waitKey(0)
+
+def medianBackground(images):
+
+    print("medianing")
+
+
+medianBackground(background_images)
+############################################################
+# Return a mask for the people in test_image.png (see
+# desired_output.png for an example)
+# Compute the median of background_images and use the resulting
+# image as a base for doing background subtraction on test_image.
+
+# Your code here
+
+############################################################
+
+cv2.imwrite("output.png", output_image)
