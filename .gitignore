@@ -2,7 +2,10 @@
 *.png
 *.jpg
 *.pdf
+*.tif
+*.mp4
 
+*./Assets
 # Created by https://www.toptal.com/developers/gitignore/api/macos,python,opencv,visualstudiocode
 # Edit at https://www.toptal.com/developers/gitignore?templates=macos,python,opencv,visualstudiocode
 
