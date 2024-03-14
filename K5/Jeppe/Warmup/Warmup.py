@@ -19,6 +19,7 @@ M = cv2.calcHist([hsvt], [0, 1], None, [180, 256], [0, 180, 0, 256])
 
 # Normalize histogram
 cv2.normalize(M, M, 0, 255, cv2.NORM_MINMAX)
+
 # Calculate back projection
 B = cv2.calcBackProject([hsv], [0, 1], M, [0, 180, 0, 256], 1)
 
