@@ -2,7 +2,7 @@ from tracemalloc import start
 import cv2 as cv
 import numpy as np
 import matplotlib.pyplot as plt
-from mean_shift_FraKursus import *
+
 from Functions import *
 
 
@@ -26,7 +26,11 @@ def meanShid(probability_map, window, start_point=[100, 100], radius=20):
 
 
 if __name__ == "__name__":
-    video, template, template_hist = GenerateMask("WalkKomprimeret.mov", "Minion.png")
+    print("STARTING")
+    exit()
+    video, template, template_hist = GenerateMask(
+        "Workshop/WalkKomprimeret.mov", "Workshop/Minion.png"
+    )
     while True:
         ret, frame = (
             video.read()
