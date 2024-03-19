@@ -6,7 +6,10 @@ import matplotlib.pyplot as plt
 
 def get_start_point(frame, probability_map, window):
     # check that the track window is inside the frame
-    if window[0] + window[2] <= frame.shape[1] and window[1] + window[3] <= frame.shape[0]:
+    if (
+        window[0] + window[2] <= frame.shape[1]
+        and window[1] + window[3] <= frame.shape[0]
+    ):
         max_value = 0
         max_coords = (0, 0)
         for y in range(window[1], window[1] + window[3]):
@@ -20,13 +23,20 @@ def get_start_point(frame, probability_map, window):
 
 
 def meanShid(probability_map, window, start_point, radius):
-    x, y, w, h = window
+    winx, winy, winw, winh = window
 
     # initialize a circular kernal
     # +1 is to make the diameter odd to have a clear center
     kernel = np.zeros((2 * radius + 1, 2 * radius + 1), np.float32)
     # make the circle filled with 1's
     cv.circle(kernel, (radius, radius), radius, 1, -1)
+    Points = []
+    for y in range(kernel.shape(0)):
+        for x in range(kernel.shape(1)):
+            if kernel(y, x) == 1:
+                if probability(winy + y, winx + x) != 0:
+                    Points.append([y, x])
+    print(Points)
 
     return x, y
 
@@ -78,7 +88,9 @@ hsv_template = cv.cvtColor(template, cv.COLOR_BGR2HSV)
 
 # make a mask of the template
 template_mask = cv.inRange(hsv_template, (12, 50, 70), (100, 255, 255))
-template_hist = cv.calcHist([hsv_template], [0, 1], template_mask, [180, 256], [0, 180, 0, 256])
+template_hist = cv.calcHist(
+    [hsv_template], [0, 1], template_mask, [180, 256], [0, 180, 0, 256]
+)
 cv.normalize(template_hist, template_hist, 0, 255, cv.NORM_MINMAX)
 
 # make track window
@@ -103,7 +115,9 @@ while True:
         break
     frame_hsv = cv.cvtColor(frame, cv.COLOR_BGR2HSV)
 
-    probability = cv.calcBackProject([frame_hsv], [0, 1], template_hist, [0, 180, 0, 256], 1)
+    probability = cv.calcBackProject(
+        [frame_hsv], [0, 1], template_hist, [0, 180, 0, 256], 1
+    )
     cv.normalize(probability, probability, 0, 255, cv.NORM_MINMAX)
     cv.imwrite("probability_map.png", probability)
 
