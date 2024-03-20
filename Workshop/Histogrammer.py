@@ -2,7 +2,7 @@ import cv2 as cv
 import numpy as np
 import matplotlib.pyplot as plt
 
-template = cv.imread("Minion.png")
+template = cv.imread("Workshop/OrangeTemplate.png")
 hsv_template = cv.cvtColor(template, cv.COLOR_BGR2HSV)
 
 # make a mask of the template

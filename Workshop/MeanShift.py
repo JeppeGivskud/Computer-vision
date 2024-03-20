@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 from Functions import *
 
 
-def meanShid(probability_map, start_point=[10, 15], radius=15):
+def meanShift(probability_map, start_point=[10, 15], radius=15):
     # Takes values inside circle and finds their relative position to the center
 
     # initialize a circular kernal
@@ -48,45 +48,68 @@ def meanShid(probability_map, start_point=[10, 15], radius=15):
     # Color Original image
     copy = probability_map.copy()
     for pixel in Points:
-        copy[pixel[0], pixel[1]] = 100
-    cv.imshow("output", copy)
-    cv.waitKey(1)
+        copy[pixel[0], pixel[1]] = 255
 
-    end = False
+    DoAnotherMeanShift = True
     if new_Location[0] == start_point[0] and new_Location[1] == start_point[1]:
-        end = True
+        DoAnotherMeanShift = False
         print("ENDING")
 
-    return new_Location, end
+    # CenterOfMax
+    new_Location = np.transpose(new_Location)
+    print(new_Location)
+
+    return new_Location, DoAnotherMeanShift
 
 
 if __name__ == "__main__":
     print("STARTING")
-    video, template, template_hist = GenerateMask(
-        "Workshop/WalkKomprimeret.mov", "Workshop/Minion.png"
-    )
-    # start_frame=144
-    # current_frame = 0
-    Probabilitymap = cv.imread("Workshop/Frame 3.png")
-    Probabilitymap = cv.cvtColor(Probabilitymap, cv.COLOR_BGR2GRAY)
-    cv.imshow("output", Probabilitymap)
-    cv.waitKey(300)
-    startlocation = [10, 10]
 
-    end = False
-    while not end:
-        startlocation, end = meanShid(Probabilitymap, startlocation, 100)
+    video = cv.VideoCapture("Workshop/Orange.mov")
+    template, template_hist = GenerateMask("Workshop/OrangeTemplate.png")
 
-    exit()
+    # Get startposition
+    ret, frame = video.read()
+
+    Probabilitymap = ProbabilityMap(frame, template_hist)
+
+    max_value = np.max(Probabilitymap)
+    max_index = np.unravel_index(np.argmax(Probabilitymap), Probabilitymap.shape)
+
+    startlocation = max_index
+    MeanShiftRadius = 30
+
+    print(startlocation)
+
     while True:
-        ret, frame = (
-            video.read()
-        )  # ret is a boolean checking if current it the last frame
-        # current_frame += 1
-        # if current_frame <= start_frame:
-        #     continue
-        # if not ret:
-        #     print("No frames grabbed! (End of video?)")
-        #     break
-        # Probabilitymap = ProbabilityMap(frame, template_hist)
-        # meanShid(Probabilitymap)
+        ret, frame = video.read()
+        Probabilitymap = ProbabilityMap(frame, template_hist)
+        # cv.imshow("output", Probabilitymap)
+        # cv.imshow("output2", frame)
+        # cv.waitKey(0)
+
+        DoMeanShift = True
+        while DoMeanShift:
+            startlocation, DoMeanShift = meanShift(
+                Probabilitymap, startlocation, MeanShiftRadius
+            )
+        # cv.rectangle(
+        #     frame,
+        #     (startlocation[0] - MeanShiftRadius, startlocation[1] - MeanShiftRadius),
+        #     (startlocation[0] + MeanShiftRadius, startlocation[1] + MeanShiftRadius),
+        #     (0, 255, 0),
+        #     2,
+        # )
+        cv.rectangle(
+            frame,
+            (startlocation[1], startlocation[0]),
+            (
+                startlocation[1] + MeanShiftRadius * 2,
+                startlocation[0] + MeanShiftRadius * 2,
+            ),
+            (0, 255, 0),
+            2,
+        )
+
+        cv.imshow("output", frame)
+        cv.waitKey(0)
