@@ -15,6 +15,7 @@ def meanShift(probability_map, start_point=[10, 15], radius=15):
     # make the circle filled with 1's
     cv.circle(kernel, (radius, radius), radius, 1, -1)
 
+    # Find points with value over 0
     Points = []
     for y in range(kernel.shape[0]):
         for x in range(kernel.shape[1]):
@@ -22,7 +23,7 @@ def meanShift(probability_map, start_point=[10, 15], radius=15):
                 if probability_map[start_point[0] + y, start_point[1] + x] > 0:
                     Points.append([start_point[0] + y, start_point[1] + x])
 
-    # print("Points before adjustment:", Points)
+    # Find the vectors from the middle of the circle
     adjusted_points = []
     for i in range(len(Points)):
         adjusted_points.append(
@@ -31,33 +32,27 @@ def meanShift(probability_map, start_point=[10, 15], radius=15):
                 Points[i][1] - (start_point[1] + radius),
             ]
         )
+
+    # Split vectors into x and y for calculating average
     adjusted_pointsy = []
     adjusted_pointsx = []
-    # print("Points after adjustment:", adjusted_points)
     for i in range(len(adjusted_points)):
         adjusted_pointsy.append(adjusted_points[i][0])
         adjusted_pointsx.append(adjusted_points[i][1])
 
+    # Calculate average change in y and x
     averagey = np.average(adjusted_pointsy)
     averagex = np.average(adjusted_pointsx)
-
-    # print("Adjustment: ", averagey, averagex)
-    # print("Old location: ", start_point[0], start_point[1])
-    # print("New location: ", averagey + start_point[0], averagex + start_point[1])
     new_Location = round(averagey + start_point[0]), round(averagex + start_point[1])
-    # Color Original image
-    copy = probability_map.copy()
-    for pixel in Points:
-        copy[pixel[0], pixel[1]] = 255
 
+    # Check if the new location is the same as the last (not good way to end loop)
     DoAnotherMeanShift = True
     if new_Location[0] == start_point[0] and new_Location[1] == start_point[1]:
         DoAnotherMeanShift = False
         print("ENDING")
 
-    # CenterOfMax
+    # The x and y locations are flipped for some reason
     new_Location = np.transpose(new_Location)
-    print(new_Location)
 
     return new_Location, DoAnotherMeanShift
 
